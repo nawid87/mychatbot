@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="dynamicTitle">{{ name }} - AI Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/chat.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+    <script src="/static/js/chat.js" defer></script>
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <button class="new-chat-btn" id="newChatBtn">
+            <i class="fas fa-plus"></i> New chat
+        </button>
+        
+        <div class="history" id="chatHistory">
+            <!-- Chat history will be populated here -->
+        </div>
+        
+        <div class="sidebar-footer">
+            <div class="bot-traits">
+                {% if traits %}
+                    <div><i class="fas fa-smile"></i> Friendly: {{ traits.friendly * 100 }}%</div>
+                    <div><i class="fas fa-question"></i> Curious: {{ traits.curious * 100 }}%</div>
+                {% else %}
+                    <div>Personality data not loaded</div>
+                {% endif %}
+            </div>
+            <a href="/admin" class="admin-link">
+                <i class="fas fa-cog"></i> Admin Dashboard
+            </a>
+        </div>
+    </div>
+    
+    <!-- Main Chat Area -->
+    <div class="main-content">
+        <div class="chat-header">
+            <h1>{{ name }}</h1>
+            <p>AI Assistant</p>
+        </div>
+        
+        <div class="chat-messages" id="chatbox">
+            <!-- Messages will appear here -->
+        </div>
+        
+        <div class="chat-input-container">
+            <div class="chat-input-box">
+                <textarea id="userInput" placeholder="Message {{ name }}..." rows="1"></textarea>
+                <button id="sendButton"><i class="fas fa-paper-plane"></i></button>
+                <button id="voiceButton" class="voice-button"><i class="fas fa-microphone"></i></button>
+            </div>
+            <div class="help-text">
+                <p>Teach me with: <code>/teach [Question] The correct response is: [Answewr...]</code></p>
+                <p>Change my name: <code>/name [NewName]</code></p>
+            </div>
+        </div>
+    </div>
+    <div id="toastNotification" class="toast-notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Message copied to clipboard</span>
+    </div>
+
+    <!-- Message Context Menu -->
+    <div id="contextMenu" class="context-menu">
+        <div class="context-menu-item" id="copyMessage"><i class="fas fa-copy"></i> Copy</div>
+        <div class="context-menu-item" id="deleteMessage"><i class="fas fa-trash"></i> Delete</div>
+    </div>
+</body>
+</html>
